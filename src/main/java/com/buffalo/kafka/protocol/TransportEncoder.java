@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka.protocol;
+package com.buffalo.kafka.protocol;
 
 import kafka.serializer.Encoder;
 import kafka.utils.VerifiableProperties;

@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka;
+package com.buffalo.kafka;
 
 import java.util.List;
 import java.util.Map;

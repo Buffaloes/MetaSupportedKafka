@@ -1,7 +1,7 @@
-package com.didichuxing.lang.kafka.consumer;
+package com.buffalo.kafka.consumer;
 
-import com.didichuxing.lang.kafka.protocol.Protocol;
-import com.didichuxing.lang.kafka.protocol.TransportDecoder;
+import com.buffalo.kafka.protocol.Protocol;
+import com.buffalo.kafka.protocol.TransportDecoder;
 import com.google.common.base.Function;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;

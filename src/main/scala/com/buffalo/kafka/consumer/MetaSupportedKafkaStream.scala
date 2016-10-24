@@ -1,6 +1,6 @@
-package com.didichuxing.lang.kafka.consumer
+package com.buffalo.kafka.consumer
 
-import com.didichuxing.lang.kafka.protocol.Protocol.Transport
+import com.buffalo.kafka.protocol.Protocol.Transport
 import kafka.consumer.{ConsumerIterator, KafkaStream}
 import kafka.message.MessageAndMetadata
 import kafka.serializer.Decoder
