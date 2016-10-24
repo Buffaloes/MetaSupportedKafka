@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package com.didichuxing.lang;
+
+message Transport {
+
+    message MapFieldEntry {
+        required string key = 1;
+        required string value = 2;
+    }
+
+    repeated MapFieldEntry meta = 1;
+    required bytes data = 2;
+
+}
