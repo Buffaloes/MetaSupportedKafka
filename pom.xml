@@ -9,7 +9,6 @@
 
     <properties>
         <maven.project.name>meta-supported-kafka</maven.project.name>
-        <ab.core.version>1.0.0-SNAPSHOT</ab.core.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.project.jackson.version>2.4.2</maven.project.jackson.version>

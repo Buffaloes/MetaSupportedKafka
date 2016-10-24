@@ -2,8 +2,6 @@ package com.buffalo.kafka.consumer
 
 import com.buffalo.kafka.KafkaEventProcessorRegister
 import com.buffalo.kafka.protocol.Protocol.Transport
-import com.didichuxing.lang.kafka.KafkaEventProcessorRegister
-import com.didichuxing.lang.kafka.protocol.Protocol.Transport
 import kafka.consumer.ConsumerIterator
 import kafka.message.MessageAndMetadata
 import kafka.serializer.Decoder
