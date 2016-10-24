@@ -1,8 +1,8 @@
 package com.didichuxing.lang.kafka.producer;
 
-import com.didichuxing.lang.kafka.consumer.KafkaEventProcessorRegister;
-import com.didichuxing.lang.kafka.consumer.protocol.Protocol;
-import com.didichuxing.lang.kafka.consumer.protocol.TransportEncoder;
+import com.didichuxing.lang.kafka.KafkaEventProcessorRegister;
+import com.didichuxing.lang.kafka.protocol.Protocol;
+import com.didichuxing.lang.kafka.protocol.TransportEncoder;
 import com.google.protobuf.ByteString;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;

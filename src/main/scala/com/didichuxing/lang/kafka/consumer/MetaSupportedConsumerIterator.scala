@@ -1,6 +1,7 @@
 package com.didichuxing.lang.kafka.consumer
 
-import com.didichuxing.lang.kafka.consumer.protocol.Protocol.Transport
+import com.didichuxing.lang.kafka.KafkaEventProcessorRegister
+import com.didichuxing.lang.kafka.protocol.Protocol.Transport
 import kafka.consumer.ConsumerIterator
 import kafka.message.MessageAndMetadata
 import kafka.serializer.Decoder

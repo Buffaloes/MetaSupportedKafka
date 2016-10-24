@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka.consumer;
+package com.didichuxing.lang.kafka;
 
 /**
  * Created by 张皆浩 on 16/10/20.

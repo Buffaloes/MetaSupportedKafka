@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka.consumer;
+package com.didichuxing.lang.kafka;
 
 import java.util.List;
 import java.util.Map;

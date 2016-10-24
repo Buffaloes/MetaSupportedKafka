@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka.consumer.protocol;
+package com.didichuxing.lang.kafka.protocol;
 
 /**
  * Created by 张皆浩 on 16/10/21.

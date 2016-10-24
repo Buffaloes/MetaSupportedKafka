@@ -1,4 +1,4 @@
-package com.didichuxing.lang.kafka.consumer.protocol;
+package com.didichuxing.lang.kafka.protocol;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
