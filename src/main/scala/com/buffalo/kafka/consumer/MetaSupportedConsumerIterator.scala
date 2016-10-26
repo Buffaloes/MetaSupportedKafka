@@ -5,6 +5,7 @@ import com.buffalo.kafka.protocol.Protocol.Transport
 import kafka.consumer.ConsumerIterator
 import kafka.message.MessageAndMetadata
 import kafka.serializer.Decoder
+import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions._
 
@@ -16,6 +17,8 @@ import scala.collection.JavaConversions._
 class MetaSupportedConsumerIterator[K, V](val iter: ConsumerIterator[K, Transport],
                                           val valueDecoder: Decoder[V])
   extends ConsumerIterator[K, V](null, 0, null, null, iter.clientId) {
+
+  val LOGGER = LoggerFactory.getLogger(classOf[MetaSupportedConsumerIterator[K,V]])
 
   override def next(): MessageAndMetadata[K, V] = {
 
@@ -34,7 +37,11 @@ class MetaSupportedConsumerIterator[K, V](val iter: ConsumerIterator[K, Transpor
         for (metaItem <- message.getMetaList) {
           meta.put(metaItem.getKey, metaItem.getValue)
         }
-        KafkaEventProcessorRegister.getOutbounds.afterMessageSent(realMessage, meta)
+        try {
+          KafkaEventProcessorRegister.getOutbounds.afterMessageSent(realMessage, meta)
+        } catch {
+          case e : Throwable => LOGGER.error(e.getMessage, e)
+        }
         realMessage
       }
     }

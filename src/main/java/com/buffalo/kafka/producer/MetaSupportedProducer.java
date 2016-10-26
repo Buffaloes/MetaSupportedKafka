@@ -10,6 +10,8 @@ import kafka.producer.ProducerConfig;
 import kafka.serializer.Encoder;
 import kafka.utils.Utils;
 import kafka.utils.VerifiableProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import scala.collection.JavaConverters;
 
 import java.util.*;
@@ -25,6 +27,8 @@ public class MetaSupportedProducer<K, V> {
 	private final Producer<K, Protocol.Transport> delegate;
 
 	private final Encoder<V> serializer;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetaSupportedProducer.class);
 
 	public MetaSupportedProducer(ProducerConfig config) {
 		VerifiableProperties vp = config.props();
@@ -58,7 +62,11 @@ public class MetaSupportedProducer<K, V> {
 		final V value = message.message();
 
 		Map<String, String> meta = new HashMap<>();
-		KafkaEventProcessorRegister.getInbounds().beforeMessageSent(value, meta);
+		try {
+			KafkaEventProcessorRegister.getInbounds().beforeMessageSent(value, meta);
+		} catch (Throwable e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 
 		final Protocol.Transport.Builder builder = Protocol.Transport.newBuilder();
 		builder.setData(ByteString.copyFrom(this.serializer.toBytes(value)));
