@@ -30,7 +30,21 @@ public class MetaSupportedProducer<K, V> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetaSupportedProducer.class);
 
+	private final Producer<K, V> origin;
+
+	private Switcher switcher = new Switcher() {
+		@Override
+		public boolean switchToMetaProducer() {
+			return true;
+		}
+	};
+
+	public void setSwitcher(Switcher switcher) {
+		this.switcher = switcher;
+	}
+
 	public MetaSupportedProducer(ProducerConfig config) {
+		this.origin = new Producer<>(config);
 		VerifiableProperties vp = config.props();
 		Properties properties = vp.props();
 		String serializerClass = properties.getProperty("serializer.class");
@@ -41,18 +55,26 @@ public class MetaSupportedProducer<K, V> {
 		properties.put("serializer.class", TransportEncoder.class.getName());
 		properties.put("key.serializer.class", config.keySerializerClass());
 		ProducerConfig newConfig = new ProducerConfig(properties);
-		this.delegate = new Producer<K, Protocol.Transport>(newConfig);
+		this.delegate = new Producer<>(newConfig);
+
 	}
 
 	public void send(KeyedMessage<K, V> message) {
-		this.delegate.send(wrapMessage(message));
+		if (switcher.switchToMetaProducer()) {
+			this.delegate.send(wrapMessage(message));
+		} else {
+			this.origin.send(message);
+		}
 	}
 
 	public void send(List<KeyedMessage<K, V>> messages) {
-		for (KeyedMessage<K, V> message : messages) {
-			this.delegate.send(wrapMessage(message));
+		if (switcher.switchToMetaProducer()) {
+			for (KeyedMessage<K, V> message : messages) {
+				this.delegate.send(wrapMessage(message));
+			}
+		} else {
+			this.origin.send(messages);
 		}
-
 	}
 
 	private KeyedMessage<K, Protocol.Transport> wrapMessage(KeyedMessage<K, V> message) {
@@ -79,6 +101,7 @@ public class MetaSupportedProducer<K, V> {
 
 	public void close() {
 		this.delegate.close();
+		this.origin.close();
 	}
 
 }
