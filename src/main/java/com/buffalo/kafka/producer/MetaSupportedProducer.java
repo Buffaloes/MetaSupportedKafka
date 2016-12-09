@@ -44,9 +44,13 @@ public class MetaSupportedProducer<K, V> {
 	}
 
 	public MetaSupportedProducer(ProducerConfig config) {
-		this.origin = new Producer<>(config);
 		VerifiableProperties vp = config.props();
 		Properties properties = vp.props();
+
+		Properties originProperties = new Properties();
+		originProperties.putAll(properties);
+		this.origin = new Producer<K, V>(new ProducerConfig(originProperties));
+
 		String serializerClass = properties.getProperty("serializer.class");
 		List<Object> args = new ArrayList<>();
 		args.add(vp);
@@ -89,7 +93,7 @@ public class MetaSupportedProducer<K, V> {
 		} catch (Throwable e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-
+		LOGGER.info("Send {} into kafka.", meta.toString());
 		final Protocol.Transport.Builder builder = Protocol.Transport.newBuilder();
 		builder.setData(ByteString.copyFrom(this.serializer.toBytes(value)));
 		for (String metaKey : meta.keySet()) {

@@ -37,6 +37,7 @@ class MetaSupportedConsumerIterator[K, V](val iter: ConsumerIterator[K, Transpor
         for (metaItem <- message.getMetaList) {
           meta.put(metaItem.getKey, metaItem.getValue)
         }
+        LOGGER.info("Receive meta from kafka. {}", meta.toString)
         try {
           KafkaEventProcessorRegister.getOutbounds.afterMessageSent(realMessage, meta)
         } catch {
