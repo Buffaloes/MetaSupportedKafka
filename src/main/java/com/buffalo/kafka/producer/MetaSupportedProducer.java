@@ -97,7 +97,11 @@ public class MetaSupportedProducer<K, V> {
 		final Protocol.Transport.Builder builder = Protocol.Transport.newBuilder();
 		builder.setData(ByteString.copyFrom(this.serializer.toBytes(value)));
 		for (String metaKey : meta.keySet()) {
-			builder.addMeta(Protocol.Transport.MapFieldEntry.newBuilder().setKey(metaKey).setValue(meta.get(metaKey)).build());
+			String metaVal = meta.get(metaKey);
+			if (metaVal == null) {
+				metaVal = "";
+			}
+			builder.addMeta(Protocol.Transport.MapFieldEntry.newBuilder().setKey(metaKey).setValue(metaVal).build());
 		}
 		final Protocol.Transport newVal = builder.build();
 		return new KeyedMessage<>(message.topic(), message.key(), message.partKey(), newVal);
